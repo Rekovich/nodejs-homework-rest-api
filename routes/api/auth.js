@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { validateBody } = require("../../utils");
+const { validateBody, ctrlWrapper } = require("../../utils");
 
 const {authenticate, upload} = require("../../middlewares/")
 
@@ -12,6 +12,10 @@ const router = express.Router();
 
 // sing up/ register
 router.post("/register", validateBody(schemas.registerSchema), ctrl.register)
+
+router.get("/verify/:verificationCode", ctrl.verifyEmail);
+
+router.post("/verify", validateBody(schemas.verifySchema), ctrl.resendEmail)
 
 // sing in/ login
 router.post("/login", validateBody(schemas.loginSchema), ctrl.login)
